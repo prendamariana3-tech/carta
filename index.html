@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffe3ec">
+
+  <!-- ✏️ EDITA AQUI (opcional): o título que aparece no separador do navegador -->
+  <title>Para a Mariana ❤️</title>
+
+  <!-- Tipos de letra elegantes (Google Fonts).
+       Se não houver internet, o site usa automaticamente letras parecidas já instaladas. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Corações a flutuar no fundo (são criados pelo script.js, não mexas aqui) -->
+  <div class="fundo-coracoes" id="coracoes" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- =====================================================
+         ECRÃ 1 — PÁGINA INICIAL
+         ===================================================== -->
+    <section class="ecra inicio" id="inicio">
+      <div class="inicio-conteudo">
+
+        <!-- Frase principal (pedida por ti). Podes alterá-la se quiseres. -->
+        <h1 class="inicio-titulo">Queria dar-te isto em mãos amanhã…</h1>
+
+        <h2 >mas como não vais à escola</h2>
+
+        <!-- ✏️ EDITA AQUI (opcional): o texto do botão -->
+        <button class="btn" id="btn-abrir" type="button">
+          <span>Abre a tua carta ❤️</span>
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- =====================================================
+         ECRÃ 2 — A CARTA
+         (fica escondida até a Mariana carregar no botão)
+         ===================================================== -->
+    <section class="ecra carta-ecra" id="carta-ecra" aria-labelledby="carta-titulo" hidden>
+
+      <article class="carta">
+
+        <!-- Rolo de cima (decoração) -->
+        <div class="rolo rolo-topo" aria-hidden="true"></div>
+
+        <!-- A folha de papel que se desenrola -->
+        <div class="papel" id="papel">
+          <div class="papel-conteudo" id="papel-conteudo">
+
+            <!-- ╔═══════════════════════════════════════════════════════╗
+                 ║   ✏️  AQUI COMEÇA O TEXTO DA CARTA — É AQUI QUE       ║
+                 ║   TENS DE ESCREVER A TUA MENSAGEM                     ║
+                 ║   Tudo o que está entre as etiquetas > e < é texto    ║
+                 ║   que podes substituir. Não apagues as etiquetas      ║
+                 ║   (as partes entre < e >).                            ║
+                 ╚═══════════════════════════════════════════════════════╝ -->
+
+            <!-- TÍTULO DA CARTA -->
+            <h2 class="carta-titulo" id="carta-titulo" tabindex="-1">Para a minha princesa ❤️</h2>
+
+            <!-- Linha decorativa (não mexas) -->
+            <div class="ornamento" aria-hidden="true"></div>
+
+            <!-- SAUDAÇÃO INICIAL -->
+            <p class="saudacao">Meu amor,</p>
+
+            <!-- ───────────── PARÁGRAFOS DA CARTA ─────────────
+                 ESTES TEXTOS SÃO SÓ DE EXEMPLO. Apaga as frases
+                 e escreve as tuas, dentro de cada <p> ... </p>.
+
+                 • Para ADICIONAR um parágrafo: copia uma linha
+                   completa (de <p> até </p>) e cola por baixo.
+                 • Para REMOVER um parágrafo: apaga a linha toda
+                   (de <p> até </p>).
+            -->
+
+            <!-- PARÁGRAFO 1 (exemplo — substitui) -->
+            <p>
+            Há 201 dias atrás, eu estava nervoso por mandar, apenas um simples, ola.
+            Mas agora que olho para trás, vejo e percebo que ter ganho coragem e tê-lo feito, foi a melhor decisão que eu alguma vez podia ter tomado.
+            </p>
+
+            <!-- PARÁGRAFO 2 (exemplo — substitui) -->
+            <p>
+            Sei que muitas vezes não sou de todo o melhor namorado do mundo, e que tenho muitos defeitos, mas irei fazer de tudo para te sentires amada, respeitada e feliz ao meu lado.
+            <br> És a melhor pessoa do mundo e não podia ter pedido alguém melhor para estar ao meu lado.
+            </p>
+
+            <!-- PARÁGRAFO 3 (exemplo — substitui) -->
+            <p>
+            Ambos cometemos muitos erros e já passámos por muito juntos, mas eu acredito que isso só nos uniu mais.
+            <br> Amo as nossas brincadeiras, o tempo passado juntos, só o estar contigo já e mais do que suficiente para mim.
+            </p>
+
+            <!-- PARÁGRAFO 4 (exemplo — substitui) -->
+            <p>
+              Concluindo, eu sei que reclamo bastante, mas eu sinto-me o rapaz mais feliz do mundo ao teu lado, sei que posso não o demonstrar da maneira certa, mas essa é a verdade.
+              <br>És a menina dos meus olhos e a mulher para a minha vida e estou disposto a lutar por nós ate não dar mais.
+              <br>Amote muito bebe e sem tracinho porque nada nos separa!!!!
+            </p>
+
+            <!-- ───────────── FIM DOS PARÁGRAFOS ───────────── -->
+
+            <!-- ASSINATURA FINAL -->
+            <p class="assinatura">O teu diguinho ❤️</p>
+
+            <!-- ╔═══════════════════════════════════════════════════════╗
+                 ║   ✏️  AQUI TERMINA O TEXTO DA CARTA                   ║
+                 ╚═══════════════════════════════════════════════════════╝ -->
+
+          </div>
+        </div>
+
+        <!-- Rolo de baixo (decoração) -->
+        <div class="rolo rolo-fundo" aria-hidden="true"></div>
+
+      </article>
+
+      <!-- Botão para voltar a abrir a carta -->
+      <button class="btn btn-suave btn-reler" id="btn-reler" type="button">
+        <span>Ler outra vez</span>
+      </button>
+
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

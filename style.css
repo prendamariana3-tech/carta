@@ -1,0 +1,550 @@
+/* =========================================================
+   CARTA PARA A MARIANA — style.css
+   ---------------------------------------------------------
+   Se quiseres mudar cores, tipos de letra ou a velocidade
+   da animação, é só alterares os valores aqui em baixo,
+   na secção "VARIÁVEIS" (logo a seguir a este comentário).
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   VARIÁVEIS (✏️ podes mudar aqui)
+   --------------------------------------------------------- */
+:root {
+  /* Cores */
+  --rosa-claro:  #ffe9ef;
+  --rosa-pastel: #ffd0de;
+  --rosa-medio:  #f4a3bd;
+  --rosa-forte:  #c9456f;
+  --rosa-texto:  #b03a62;
+  --tinta:       #5e2a3c;   /* cor do texto da carta */
+  --branco:      #ffffff;
+  --papel:       #fffdfd;
+
+  /* Velocidade das animações (se mudares aqui, o script ajusta-se sozinho) */
+  --duracao-desenrolar: 3.2s;  /* tempo que a carta demora a abrir */
+  --duracao-saida:      1s;    /* tempo que a página inicial demora a desaparecer */
+
+  /* Tipos de letra */
+  --fonte-texto: "Cormorant Garamond", "Palatino Linotype", Palatino, Georgia, serif;
+  --fonte-manuscrita: "Pinyon Script", "Snell Roundhand", "Apple Chancery", "Segoe Script", cursive;
+}
+
+
+/* ---------------------------------------------------------
+   BASE
+   --------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  font-family: var(--fonte-texto);
+  font-weight: 500;
+  color: var(--tinta);
+  -webkit-tap-highlight-color: transparent;
+  background:
+    linear-gradient(160deg, #ffffff 0%, #ffeef3 38%, #ffd6e3 74%, #ffe6ee 100%);
+  background-attachment: fixed;
+}
+
+/* Brilhos suaves de cor que se movem muito devagar no fundo */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.95), transparent 42%),
+    radial-gradient(circle at 84% 86%, rgba(244, 163, 189, 0.45), transparent 48%),
+    radial-gradient(circle at 80% 12%, rgba(255, 208, 222, 0.7), transparent 40%);
+  animation: respirar 22s ease-in-out infinite alternate;
+}
+
+@keyframes respirar {
+  from { transform: translate3d(-2%, 1%, 0) scale(1); }
+  to   { transform: translate3d(2%, -2%, 0) scale(1.06); }
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+:focus-visible {
+  outline: 3px solid var(--rosa-forte);
+  outline-offset: 4px;
+}
+
+
+/* ---------------------------------------------------------
+   CORAÇÕES A FLUTUAR NO FUNDO
+   (criados pelo script.js)
+   --------------------------------------------------------- */
+.fundo-coracoes {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.coracao {
+  position: absolute;
+  bottom: -60px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: flutuar linear infinite;
+}
+
+@keyframes flutuar {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: var(--opacidade, 0.5); }
+  90%  { opacity: var(--opacidade, 0.5); }
+  100% { transform: translate3d(var(--deriva, 30px), -118vh, 0) rotate(var(--rotacao, 20deg)); opacity: 0; }
+}
+
+/* Versão para quem prefere menos movimento: corações parados */
+.coracao.parado {
+  bottom: auto;
+  animation: none;
+  opacity: 0.28;
+}
+
+
+/* ---------------------------------------------------------
+   ECRÃS (estrutura comum)
+   --------------------------------------------------------- */
+.ecra {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* ---------------------------------------------------------
+   ECRÃ 1 — PÁGINA INICIAL
+   --------------------------------------------------------- */
+.inicio {
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition:
+    opacity var(--duracao-saida) ease,
+    transform var(--duracao-saida) ease,
+    filter var(--duracao-saida) ease;
+}
+
+.inicio.a-sair {
+  opacity: 0;
+  transform: translateY(-14px) scale(0.98);
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.inicio-conteudo {
+  width: min(100%, 44rem);
+}
+
+/* Entrada da página: os três elementos aparecem um a seguir ao outro */
+.inicio-titulo,
+.inicio-frase,
+.inicio .btn {
+  animation: entrar 1.4s ease both;
+}
+.inicio-titulo { animation-delay: 0.2s; }
+.inicio-frase  { animation-delay: 1s; }
+.inicio .btn   { animation-delay: 1.8s; }
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.inicio-titulo {
+  margin: 0 0 1.4rem;
+  font-family: var(--fonte-manuscrita);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 9vw, 4.8rem);
+  line-height: 1.2;
+  color: var(--rosa-texto);
+  text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(255, 255, 255, 0.9);
+}
+
+.inicio-frase {
+  margin: 0 auto 2.6rem;
+  max-width: 30rem;
+  font-size: clamp(1.25rem, 3.6vw, 1.6rem);
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--tinta);
+  text-wrap: balance;
+}
+
+
+/* ---------------------------------------------------------
+   BOTÕES
+   --------------------------------------------------------- */
+.btn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.4rem;
+  padding: 0.85rem 2.4rem;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--fonte-texto);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--branco);
+  background: linear-gradient(135deg, #c9456f 0%, #e56f96 100%);
+  box-shadow:
+    0 10px 24px -6px rgba(201, 69, 111, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition:
+    transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1),
+    box-shadow 0.35s ease,
+    background-color 0.35s ease;
+  touch-action: manipulation;
+}
+
+/* Brilho que atravessa o botão */
+.btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+  pointer-events: none;
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+/* Rato (só em dispositivos que têm rato) */
+@media (hover: hover) {
+  .btn:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow:
+      0 16px 32px -8px rgba(201, 69, 111, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
+  .btn:hover::after {
+    transform: translateX(260%) skewX(-18deg);
+    transition: transform 0.9s ease;
+  }
+}
+
+/* Toque no ecrã / clique */
+.btn:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 5px 14px -4px rgba(201, 69, 111, 0.5);
+  transition-duration: 0.12s;
+}
+
+/* Botão mais discreto ("Ler outra vez") */
+.btn-suave {
+  color: var(--rosa-texto);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 8px 20px -8px rgba(201, 69, 111, 0.35),
+    inset 0 0 0 1.5px var(--rosa-medio);
+}
+.btn-suave::after {
+  background: linear-gradient(100deg, transparent, rgba(244, 163, 189, 0.4), transparent);
+}
+@media (hover: hover) {
+  .btn-suave:hover {
+    background: var(--branco);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   ECRÃ 2 — A CARTA
+   --------------------------------------------------------- */
+.carta-ecra {
+  justify-content: flex-start;
+  /* O espaço lateral é maior do que a largura extra dos rolos */
+  padding: clamp(2rem, 7vh, 4rem) clamp(1.7rem, 6vw, 2.4rem) 4rem;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.carta-ecra.visivel {
+  opacity: 1;
+}
+
+.carta {
+  position: relative;
+  width: min(100%, 38rem);
+  margin-inline: auto;
+}
+
+/* Rolos de papel (em cima e em baixo) */
+.rolo {
+  position: relative;
+  z-index: 2;
+  height: 26px;
+  margin-inline: -14px;
+  border-radius: 14px;
+  background: linear-gradient(
+    to bottom,
+    #f6bfd1 0%,
+    #fff1f5 32%,
+    #fbd0dc 62%,
+    #e79bb6 100%
+  );
+  box-shadow:
+    0 8px 16px -4px rgba(201, 69, 111, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Pontas redondas dos rolos */
+.rolo::before,
+.rolo::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  width: 18px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff1f5, #e58aa8 75%);
+  box-shadow: 0 3px 6px rgba(201, 69, 111, 0.25);
+}
+.rolo::before { left: -6px; }
+.rolo::after  { right: -6px; }
+
+.rolo-fundo {
+  margin-top: -2px;
+}
+
+/* A folha de papel: a altura vai de 0 até ao tamanho real (feito pelo script.js) */
+.papel {
+  position: relative;
+  z-index: 1;
+  height: 0;
+  overflow: hidden;
+  background-color: var(--papel);
+  box-shadow:
+    0 22px 44px -14px rgba(201, 69, 111, 0.4),
+    0 4px 12px rgba(201, 69, 111, 0.12),
+    inset 0 0 40px rgba(244, 163, 189, 0.16);
+  transition: height var(--duracao-desenrolar) cubic-bezier(0.45, 0.05, 0.25, 1);
+}
+
+/* Textura fina de papel */
+.papel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.4;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .6 0 0 0 0 .35 0 0 0 0 .4 0 0 0 .6 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Sombra suave na borda inferior do papel, como se estivesse a curvar */
+.papel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 22px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(201, 69, 111, 0.16), transparent);
+}
+
+.papel-conteudo {
+  position: relative;
+  z-index: 1;
+  padding: clamp(2rem, 6vw, 3.2rem) clamp(1.4rem, 6vw, 3.4rem) clamp(2rem, 6vw, 3rem);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+/* Quando a carta abre, o texto aparece com calma, enquanto o papel desce */
+.papel.aberto .papel-conteudo {
+  opacity: 1;
+  transition: opacity 1.8s ease 0.5s;
+}
+
+/* Título */
+.carta-titulo {
+  margin: 0;
+  text-align: center;
+  font-family: var(--fonte-manuscrita);
+  font-weight: 400;
+  font-size: clamp(2.1rem, 8vw, 3.4rem);
+  line-height: 1.25;
+  color: var(--rosa-texto);
+  outline: none;
+}
+
+/* Linha decorativa com coração */
+.ornamento {
+  position: relative;
+  height: 1.4rem;
+  margin: 0.9rem auto 1.6rem;
+  width: min(60%, 14rem);
+  text-align: center;
+}
+.ornamento::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--rosa-medio), transparent);
+}
+.ornamento::after {
+  content: "♥";
+  position: relative;
+  padding: 0 0.7rem;
+  font-size: 1rem;
+  line-height: 1.4rem;
+  color: var(--rosa-medio);
+  background: var(--papel);
+}
+
+/* Saudação e parágrafos */
+.saudacao {
+  margin: 0 0 1.2rem;
+  font-size: clamp(1.4rem, 4.4vw, 1.7rem);
+  font-style: italic;
+  color: var(--rosa-texto);
+}
+
+.papel-conteudo p {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.18rem, 3.4vw, 1.38rem);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+/* Assinatura */
+.papel-conteudo .assinatura {
+  margin: 2.2rem 0 0;
+  text-align: right;
+  font-family: var(--fonte-manuscrita);
+  font-weight: 400;
+  font-size: clamp(2rem, 7vw, 2.8rem);
+  line-height: 1.2;
+  color: var(--rosa-texto);
+}
+
+/* Botão "Ler outra vez" */
+.btn-reler {
+  margin-top: 2.4rem;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    box-shadow 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.btn-reler.mostrar {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (hover: hover) {
+  .btn-reler.mostrar:hover {
+    transform: translateY(-4px) scale(1.04);
+  }
+}
+.btn-reler.mostrar:active {
+  transform: translateY(0) scale(0.96);
+}
+
+
+/* ---------------------------------------------------------
+   PEQUENA EXPLOSÃO DE CORAÇÕES (ao carregar no botão)
+   --------------------------------------------------------- */
+.coracao-explosao {
+  position: fixed;
+  z-index: 50;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+  animation: explodir 1.2s ease-out forwards;
+}
+
+@keyframes explodir {
+  0%   { transform: translate(0, 0) scale(0.4) rotate(0deg); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(1.2) rotate(var(--rot)); opacity: 0; }
+}
+
+
+/* ---------------------------------------------------------
+   ECRÃS PEQUENOS (telemóveis)
+   --------------------------------------------------------- */
+@media (max-width: 480px) {
+  .btn {
+    width: 100%;
+    max-width: 20rem;
+    font-size: 1.25rem;
+  }
+  .btn-reler {
+    width: auto;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   PARA QUEM PREFERE MENOS MOVIMENTO (definição do telemóvel/PC)
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
